@@ -33,7 +33,12 @@ class Guild(models.Model):
 
     # This is where the model deviates from the discord spec
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    afk_channel = models.ForeignKey('Channel', on_delete=models.SET_NULL)
+    afk_channel = models.ForeignKey(
+        'Channel',
+        on_delete=models.SET_NULL,
+        null=True,
+        default=None,
+        related_name='+')
 
     region = models.CharField(
         max_length=16,
@@ -50,7 +55,13 @@ class Guild(models.Model):
         name="Widget Enabled?",
         default=False
     )
-    widget_channel = models.ForeignKey('Channel', on_delete=models.SET_NULL)
+    widget_channel = models.ForeignKey(
+        'Channel',
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name='+',
+        default=None
+    )
     verification_level = models.IntegerField(
         choices=[
             (0, "None"),
@@ -87,12 +98,17 @@ class Guild(models.Model):
     system_channel = models.ForeignKey(
         'Channel',
         on_delete=models.SET_NULL,
-        null=True
+        null=True,
+        default=None,
+        related_name='+'
     )
     system_channel_flags = models.IntegerField(default=0)
     rules_channel = models.ForeignKey(
         'Channel',
-        on_delete=models.SET_NULL
+        on_delete=models.SET_NULL,
+        null=True,
+        default=None,
+        related_name='+'
     )
     large = models.BooleanField(name="Large?", default=False)
     vanity_url_code = models.CharField(max_length=64, null=True, default=None)
@@ -113,7 +129,8 @@ class Guild(models.Model):
         'Channel',
         on_delete=models.SET_NULL,
         null=True,
-        default=None
+        default=None,
+        related_name='+'
     )
     nsfw_level = models.IntegerField(
         choices=[

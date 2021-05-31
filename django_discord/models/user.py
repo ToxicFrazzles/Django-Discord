@@ -49,7 +49,7 @@ class User(models.Model):
         default=False
     )
     email = models.CharField(
-        max_length="128",
+        max_length=128,
         null=True,
         blank=True,
         default=None
