@@ -1,5 +1,4 @@
 from django.db import models
-from .guild import Guild
 
 
 class Channel(models.Model):
@@ -21,7 +20,7 @@ class Channel(models.Model):
         default=0
     )
     guild = models.ForeignKey(
-        Guild,
+        'Guild',
         on_delete=models.CASCADE,
         null=True,
         default=None

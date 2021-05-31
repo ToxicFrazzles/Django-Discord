@@ -1,6 +1,5 @@
 from django.db import models
 from .user import User
-from .channel import Channel
 
 
 class Guild(models.Model):
@@ -34,7 +33,7 @@ class Guild(models.Model):
 
     # This is where the model deviates from the discord spec
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    afk_channel = models.ForeignKey(Channel, on_delete=models.SET_NULL)
+    afk_channel = models.ForeignKey('Channel', on_delete=models.SET_NULL)
 
     region = models.CharField(
         max_length=16,
@@ -51,7 +50,7 @@ class Guild(models.Model):
         name="Widget Enabled?",
         default=False
     )
-    widget_channel = models.ForeignKey(Channel, on_delete=models.SET_NULL)
+    widget_channel = models.ForeignKey('Channel', on_delete=models.SET_NULL)
     verification_level = models.IntegerField(
         choices=[
             (0, "None"),
@@ -86,13 +85,13 @@ class Guild(models.Model):
     )
     application = models.PositiveBigIntegerField(null=True, default=None)
     system_channel = models.ForeignKey(
-        Channel,
+        'Channel',
         on_delete=models.SET_NULL,
         null=True
     )
     system_channel_flags = models.IntegerField(default=0)
     rules_channel = models.ForeignKey(
-        Channel,
+        'Channel',
         on_delete=models.SET_NULL
     )
     large = models.BooleanField(name="Large?", default=False)
@@ -111,7 +110,7 @@ class Guild(models.Model):
     premium_subscription_count = models.IntegerField(default=0)
     preferred_locale = models.CharField(max_length=16, null=True, default=None)
     public_updates_channel_id = models.ForeignKey(
-        Channel,
+        'Channel',
         on_delete=models.SET_NULL,
         null=True,
         default=None
